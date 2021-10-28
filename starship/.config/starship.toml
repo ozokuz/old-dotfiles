@@ -1,0 +1,42 @@
+add_newline = true
+format = """$username$hostname$git_branch$git_status$character$directory"""
+
+[username]
+show_always = true
+format = "[](#3A7BC1)[$user ]($style)"
+style_user = "bold bg:#3A7BC1 #55FF99"
+
+[hostname]
+ssh_only = false
+format = "[@](bold bg:#3A7BC1 white)[ $hostname ]($style)[](#3A7BC1 bg:black)"
+style = "bold bg:#3A7BC1 #55FF99"
+
+[git_branch]
+format = "[ $symbol$branch ]($style)"
+style = "bold bg:black purple"
+
+[git_status]
+format = "[\\[$all_status$ahead_behind\\] ]($style)"
+conflicted = "C"
+ahead = "^"
+behind = "v"
+diverged = "-"
+up_to_date = " "
+untracked = "U"
+stashed = "S"
+modified = "M"
+staged = "+"
+renamed = ">"
+deleted = "x"
+style = "bold bg:black red"
+
+[character]
+format = "[](black bg:#FF479C)$symbol[](bg:#770077 #FF479C)"
+success_symbol = "[ > ](bold bg:#FF479C #00FF00)"
+error_symbol = "[ x ](bold bg:#FF479C #FF0000)"
+vicmd_symbol = "[ v ](bold bg:#FF479C #0000FF)"
+
+[directory]
+format = "[ $path]($style)[$read_only]($read_only_style)[ ](bg:#770077)[](#770077) "
+style = "bold bg:#770077"
+fish_style_pwd_dir_length = 1

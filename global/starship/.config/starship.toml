@@ -3,13 +3,13 @@ format = """$username$hostname$git_branch$git_status$character$directory"""
 
 [username]
 show_always = true
-format = "[](#3A7BC1)[$user ]($style)"
-style_user = "bold bg:#3A7BC1 #55FF99"
+format = "[](#3A6AC1)[$user ]($style)"
+style_user = "bold bg:#3A6AC1 #FFFF00"
 
 [hostname]
 ssh_only = false
-format = "[@](bold bg:#3A7BC1 white)[ $hostname ]($style)[](#3A7BC1 bg:black)"
-style = "bold bg:#3A7BC1 #55FF99"
+format = "[@](bold bg:#3A6AC1 white)[ $hostname ]($style)[](#3A6AC1 bg:black)"
+style = "bold bg:#3A6AC1 #FF00FF"
 
 [git_branch]
 format = "[ $symbol$branch ]($style)"

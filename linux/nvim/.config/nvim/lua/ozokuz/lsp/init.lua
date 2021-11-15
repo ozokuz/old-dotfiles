@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local nvim_lsp = require('lspconfig')
+  local lsp_installer = require('nvim-lsp-installer.servers')
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
@@ -63,10 +63,16 @@ function M.setup()
       opts = vim.tbl_deep_extend('force', opts, require('ozokuz.lsp.providers.tsserver')(on_attach))
     end
 
-    nvim_lsp[lsp].setup(opts)
+    local available, server = lsp_installer.get_server(lsp)
+    if available then
+      server:on_ready(function() server:setup(opts) end)
+      if not server:is_installed() then
+        server:install()
+      end
+    end
   end
 
-  nvim_lsp.diagnosticls.setup {
+  --[[nvim_lsp.diagnosticls.setup {
     capabilities = capabilities,
     on_attach = on_attach,
     filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'json', 'markdown', 'css', 'less', 'scss', 'lua' },
@@ -88,7 +94,7 @@ function M.setup()
         stylua = {command = "stylua", args = {"--stdin-filepath", "%filepath"}}
       }
     }
-  }
+  }]]--
 end
 
 return M

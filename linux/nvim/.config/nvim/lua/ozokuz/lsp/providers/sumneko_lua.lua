@@ -3,7 +3,6 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 local opts = {
-  cmd = { vim.fn.stdpath('data')..'/../../bin/lua-language-server', '-E', vim.fn.stdpath('data')..'/../../src/lua-language-server/main.lua' },
   settings = {
     Lua = {
       runtime = {

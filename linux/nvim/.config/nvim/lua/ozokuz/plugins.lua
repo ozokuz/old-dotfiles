@@ -98,6 +98,7 @@ return require('packer').startup(function(use)
     branch = 'nvim51',
     requires = {
       'neovim/nvim-lspconfig',
+      'williamboman/nvim-lsp-installer',
       'folke/lsp-colors.nvim',
       'hrsh7th/cmp-nvim-lsp',
       'ray-x/lsp_signature.nvim'

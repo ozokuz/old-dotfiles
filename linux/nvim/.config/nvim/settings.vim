@@ -1,10 +1,13 @@
 " Set leader key
-let mapleader=" "
 nnoremap <Space> <Nop>
-set iskeyword+=-
+let mapleader=" "
 
-" Enable syntax highlighting
-syntax enable
+" No swap or backup files
+set nobackup
+set noswapfile
+
+" Extend word objects that have a dash (-)
+set iskeyword+=-
 
 " Enable editing multiple files
 set hidden
@@ -28,6 +31,9 @@ set splitright
 
 " 256 color support
 set t_Co=256
+
+" true color support
+set termguicolors
 
 " no concealed text
 set conceallevel=0
@@ -66,4 +72,4 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 set clipboard=unnamedplus
 
 " set theme
-colorscheme palenight
+colorscheme onedarkhc

@@ -15,10 +15,10 @@ clear
 echo -e "$BANNER"
 
 echo "Updating packages before installing dotfiles"
-sudo pacman -Syu
+sudo pacman -Syu --noconfirm
 
 echo "Installing packages"
-sudo pacman -S alacritty base-devel bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug
+sudo pacman -S alacritty base-devel bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
 
 echo "Backing up existing files"
 pushd $HOME

@@ -15,6 +15,14 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
+export EDITOR="nvim"
+
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 alias c="code"
 alias v="$EDITOR"
 alias le="exa"
@@ -28,6 +36,7 @@ alias ga="git add"
 alias gpl="git pull"
 alias gps="git push"
 alias vf="fzf | xargs $EDITOR"
+alias cl="clear"
 
 setopt auto_cd
 

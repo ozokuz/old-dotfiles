@@ -71,6 +71,7 @@ done
 echo "Downloading dotfiles"
 if [ -d $HOME/.dotfiles ]; then
   echo "Please remove existing .dotfiles before installing these ones"
+  exit 1
 else
   gh repo clone ozokuz/dotfiles .dotfiles
 fi

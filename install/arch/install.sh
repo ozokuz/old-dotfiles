@@ -1,6 +1,6 @@
 #!/bin/bash
 read -r -d '' BANNER << EOF
-   ____              __        _          ____        __  _____ __         
+.  ____              __        _          ____        __  _____ __         
   / __ \____  ____  / /____  _( )_____   / __ \____  / /_/ __(_) /__  _____
  / / / /_  / / __ \/ //_/ / / /// ___/  / / / / __ \/ __/ /_/ / / _ \/ ___/
 / /_/ / / /_/ /_/ / ,< / /_/ / (__  )  / /_/ / /_/ / /_/ __/ / /  __(__  ) 
@@ -31,13 +31,32 @@ fi
 echo "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
+_is_installed() {
+  pacman -Qi $1 > /dev/null
+  echo $?
+}
+
 echo "Installing packages"
-sudo pacman -S alacritty base-devel bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
+toinstall=()
+for pkg in alacritty base-devel bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
+do
+  if [[ $(_is_installed $pkg) == 0 ]]; then
+    continue
+  fi
+  toinstall+=($pkg)
+done
+if [[ "${toinstall[@]}" == "" ]]; then
+  echo "All packages are already installed"
+else
+  sudo pacman -S "${toinstall[@]}" --noconfirm
+fi
 
 echo "Backing up existing files"
 pushd $HOME
 BACKUP_DIR=.dotfiles-backup
-mkdir $BACKUP_DIR
+if [ ! -d $BACKUP_DIR ]; then
+  mkdir $BACKUP_DIR
+fi
 for item in .zshrc .config/starship.toml .gitconfig
 do
   if [ -f $item ]; then
@@ -47,9 +66,12 @@ do
 done
 
 echo "Downloading dotfiles"
-gh repo clone ozokuz/dotfiles .dotfiles
+if [ -d $HOME/.dotfiles ]; then
+  echo "Please remove existing .dotfiles before installing these ones"
+else
+  gh repo clone ozokuz/dotfiles .dotfiles
+fi
 popd
-
 
 echo "Installing dotfiles"
 pushd $HOME/.dotfiles/linux

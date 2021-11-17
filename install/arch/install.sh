@@ -31,6 +31,14 @@ fi
 echo "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
+pushd() {
+  command pushd "$@" > /dev/null
+}
+
+popd() {
+  command popd "$@" > /dev/null
+}
+
 _is_installed() {
   pacman -Qi $1 > /dev/null
   echo $?
@@ -55,16 +63,15 @@ else
 fi
 
 echo "Backing up existing files"
-pushd $HOME
-BACKUP_DIR=.dotfiles-backup
+BACKUP_DIR=$HOME/.dotfiles-backup
 if [ ! -d $BACKUP_DIR ]; then
   mkdir $BACKUP_DIR
 fi
 for item in .zshrc .config/starship.toml .config/alacritty .dircolors .tmux.conf .config/nvim .gitconfig
 do
-  if [ -e $item ]; then
+  if test -e $HOME/$item; then
     echo "Backing up $item"
-    mv $item $BACKUP_DIR/
+    mv $HOME/$item $BACKUP_DIR/
   fi
 done
 
@@ -73,9 +80,10 @@ if [ -d $HOME/.dotfiles ]; then
   echo "Please remove existing .dotfiles before installing these ones"
   exit 1
 else
+  pushd $HOME
   gh repo clone ozokuz/dotfiles .dotfiles
+  popd
 fi
-popd
 
 echo "Installing dotfiles"
 pushd $HOME/.dotfiles/linux

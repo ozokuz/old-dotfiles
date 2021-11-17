@@ -62,7 +62,7 @@ if [ ! -d $BACKUP_DIR ]; then
 fi
 for item in .zshrc .config/starship.toml .config/alacritty .dircolors .tmux.conf .config/nvim .gitconfig
 do
-  if [ -f $item ]; then
+  if [ -e $item ]; then
     echo "Backing up $item"
     mv $item $BACKUP_DIR/
   fi

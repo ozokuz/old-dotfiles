@@ -14,6 +14,20 @@ clear
 
 echo -e "$BANNER"
 
+AURMAN=""
+for aurman in yay paru
+do
+  if command -v $aurman &> /dev/null
+  then
+    AURMAN=$aurman
+  fi
+done
+if [[ -z $AURMAN ]]
+then
+  echo "No aur manager was found. Please install one to continue"
+  exit 1
+fi
+
 echo "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
@@ -31,22 +45,29 @@ do
     mv $item $BACKUP_DIR
   fi
 done
+
+echo "Downloading dotfiles"
+gh repo clone ozokuz/dotfiles .dotfiles
 popd
+
 
 echo "Installing dotfiles"
 pushd $HOME/.dotfiles/linux
-for item in alacritty dircolors git neovim tmux zsh
+for item in alacritty dircolors git nvim tmux zsh
 do
   echo "Installing $item config"
   stow -t $HOME $item
 done
+pushd ../global
+stow -t $HOME starship
+popd
 popd
 
 echo "Making local folders"
 mkdir -p $HOME/.local/{bin,src}
 
 echo "Installing nvm"
-curl -fsSLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash > /dev/null
+curl -fsSLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash
 NVM_DIR="$([ -z "${XDG_CONFIG_HOME}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 

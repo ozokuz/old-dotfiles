@@ -38,13 +38,16 @@ _is_installed() {
 
 echo "Installing packages"
 toinstall=()
-for pkg in alacritty base-devel bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
+for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
 do
   if [[ $(_is_installed $pkg) == 0 ]]; then
     continue
   fi
   toinstall+=($pkg)
 done
+if [[ $(pacman -Qg base-devel | wc -l) != 24 ]]; then
+  toinstall+=("base-devel")
+fi
 if [[ "${toinstall[@]}" == "" ]]; then
   echo "All packages are already installed"
 else

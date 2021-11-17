@@ -60,11 +60,11 @@ BACKUP_DIR=.dotfiles-backup
 if [ ! -d $BACKUP_DIR ]; then
   mkdir $BACKUP_DIR
 fi
-for item in .zshrc .config/starship.toml .gitconfig
+for item in .zshrc .config/starship.toml .config/alacritty .dircolors .tmux.conf .config/nvim .gitconfig
 do
   if [ -f $item ]; then
     echo "Backing up $item"
-    mv $item $BACKUP_DIR
+    mv $item $BACKUP_DIR/
   fi
 done
 

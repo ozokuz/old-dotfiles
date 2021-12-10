@@ -81,7 +81,7 @@ if [ -d $HOME/.dotfiles ]; then
   exit 1
 else
   pushd $HOME
-  gh repo clone ozokuz/dotfiles .dotfiles
+  git clone https://github.com/ozokuz/dotfiles .dotfiles
   popd
 fi
 

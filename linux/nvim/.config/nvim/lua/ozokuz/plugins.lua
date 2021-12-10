@@ -41,7 +41,6 @@ return require('packer').startup(function(use)
   -- Syntax Highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
-    branch = '0.5-compat',
     run = ':TSUpdate',
     requires = {
       'p00f/nvim-ts-rainbow'
@@ -95,7 +94,6 @@ return require('packer').startup(function(use)
   -- LSP
   use {
     'tami5/lspsaga.nvim',
-    branch = 'nvim51',
     requires = {
       'neovim/nvim-lspconfig',
       'williamboman/nvim-lsp-installer',

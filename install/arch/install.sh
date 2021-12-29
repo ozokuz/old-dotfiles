@@ -14,23 +14,6 @@ clear
 
 echo -e "$BANNER"
 
-AURMAN=""
-for aurman in yay paru
-do
-  if command -v $aurman &> /dev/null
-  then
-    AURMAN=$aurman
-  fi
-done
-if [[ -z $AURMAN ]]
-then
-  echo "No aur manager was found. Please install one to continue"
-  exit 1
-fi
-
-echo "Updating packages before installing dotfiles"
-sudo pacman -Syu --noconfirm
-
 pushd() {
   command pushd "$@" > /dev/null
 }
@@ -39,16 +22,36 @@ popd() {
   command popd "$@" > /dev/null
 }
 
+echon() {
+  echo "\n$@"
+}
+
+echon "Updating packages before installing dotfiles"
+sudo pacman -Syu --noconfirm
+
+echon "Making local folders"
+mkdir -p $HOME/.local/{bin,src}
+
+if ! command -v yay &> /dev/null; then
+  echon "Installing yay as it wasn't found"
+  pushd ~/.local/src/
+  git clone https://aur.archlinux.org/yay.git
+  pushd yay
+  makepkg -si
+  popd
+  popd
+fi
+
 _is_installed() {
   pacman -Qi $1 > /dev/null
   echo $?
 }
 
-echo "Installing packages"
+echon "Installing packages"
 toinstall=()
-for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh ripgrep starship stow tmux wget zsh ueberzug --noconfirm
+for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh p7zip ripgrep starship stow tmux wget zsh ueberzug --noconfirm
 do
-  if [[ $(_is_installed $pkg) == 0 ]]; then
+  if [[ "$(_is_installed $pkg)" == "0" ]]; then
     continue
   fi
   toinstall+=($pkg)
@@ -56,18 +59,36 @@ done
 if [[ $(pacman -Qg base-devel | wc -l) != 24 ]]; then
   toinstall+=("base-devel")
 fi
-if [[ "${toinstall[@]}" == "" ]]; then
-  echo "All packages are already installed"
-else
+if [[ "${toinstall[@]}" != "" ]]; then
   sudo pacman -S "${toinstall[@]}" --noconfirm
 fi
+echo "Installing aur packages"
+toinstall=()
+for pkg in brave-bin google-chrome nerd-fonts-fira-code visual-studio-code-bin; do
+  if [[ "$(_is_installed $pkg)" == "0"]]; then
+    continue
+  fi
+  toinstall+=($pkg)
+done
+if [[ "${toinstall[@]}" != "" ]]; then
+  yay -S "${toinstall[@]}"
+fi
+echo "Installing multimc"
+if [[ "$(_is_installed $pkg)" != "0"]]; then
+  pushd ~/.local/src/
+  git clone https://github.com/MultiMC/multimc-pkgbuild.git
+  pushd multimc-pkgbuild
+  makepkg -si
+  popd
+  popd
+fi
 
-echo "Backing up existing files"
+echon "Backing up existing files"
 BACKUP_DIR=$HOME/.dotfiles-backup
 if [ ! -d $BACKUP_DIR ]; then
   mkdir $BACKUP_DIR
 fi
-for item in .zshrc .config/starship.toml .config/alacritty .dircolors .tmux.conf .config/nvim .gitconfig
+for item in .zshrc .config/starship.toml .config/alacritty .dircolors .tmux.conf .config/nvim .gitconfig .config/plasma-workspace/env/askpass.sh .config/autostart/ssh-add.desktop .config/systemd/user/ssh-agent.service
 do
   if test -e $HOME/$item; then
     echo "Backing up $item"
@@ -75,7 +96,7 @@ do
   fi
 done
 
-echo "Downloading dotfiles"
+echon "Downloading dotfiles"
 if [ -d $HOME/.dotfiles ]; then
   echo "Please remove existing .dotfiles before installing these ones"
   exit 1
@@ -85,9 +106,9 @@ else
   popd
 fi
 
-echo "Installing dotfiles"
+echon "Installing dotfiles"
 pushd $HOME/.dotfiles/linux
-for item in alacritty dircolors git nvim tmux zsh
+for item in alacritty dircolors git nvim tmux zsh plasma
 do
   echo "Installing $item config"
   stow -t $HOME $item
@@ -97,17 +118,21 @@ stow -t $HOME starship
 popd
 popd
 
-echo "Making local folders"
-mkdir -p $HOME/.local/{bin,src}
+echon "Installing zplug"
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
-echo "Installing nvm"
-curl -fsSLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash
-NVM_DIR="$([ -z "${XDG_CONFIG_HOME}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+echon "Installing sdkman"
+curl -s "https://get.sdkman.io" | bash
 
-echo "Installing Node 16"
-nvm install 16
+echon "Enabling ssh-agent service for current user"
+systemctl enable ssh-agent --user
 
-echo "Installing development tools"
-npm i -g typescript prettier @angular/cli nx @nestjs/cli @vue/cli firebase-tools yarn
+echon "Installing pnpm"
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+echon "Installing Node 16"
+pnpm env use --global 16
+
+echon "Installing development tools"
+pnpm add -g nx@latest firebase-tools@latest yarn@latest npm@latest
 

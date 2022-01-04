@@ -1,6 +1,6 @@
 [user]
         name = Ozoku
-	email = 19756856+ozokuz@users.noreply.github.com
+        email = 19756856+ozokuz@users.noreply.github.com
 [color]
         ui = true
 [filter "lfs"]
@@ -10,3 +10,4 @@
         required = true
 [core]
         autocrlf = input
+        sshCommand = C:/Windows/System32/OpenSSH/ssh.exe

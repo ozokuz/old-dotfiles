@@ -127,5 +127,5 @@ echon "Installing Node 16"
 pnpm env use --global 16
 
 echon "Installing development tools"
-pnpm add -g nx@latest firebase-tools@latest yarn@latest npm@latest
+pnpm add -g nx@latest yarn@latest npm@latest
 

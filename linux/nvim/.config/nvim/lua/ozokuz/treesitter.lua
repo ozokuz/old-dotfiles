@@ -32,7 +32,6 @@ function M.setup()
       "rust",
       "scss",
       "svelte",
-      "swift",
       "toml",
       "tsx",
       "typescript",

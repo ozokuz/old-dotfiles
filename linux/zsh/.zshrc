@@ -25,11 +25,8 @@ fi
 
 export EDITOR="nvim"
 
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PNPM_HOME="/home/ozoku/.local/share/pnpm"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PNPM_HOME:$PATH"
 
 alias c="code"
 alias v="$EDITOR"
@@ -59,3 +56,4 @@ eval "$(starship init zsh)"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+

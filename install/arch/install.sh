@@ -1,9 +1,9 @@
 #!/bin/bash
 read -r -d '' BANNER << EOF
-.  ____              __        _          ____        __  _____ __         
+.  ____              __        _          ____        __  _____ __
   / __ \____  ____  / /____  _( )_____   / __ \____  / /_/ __(_) /__  _____
  / / / /_  / / __ \/ //_/ / / /// ___/  / / / / __ \/ __/ /_/ / / _ \/ ___/
-/ /_/ / / /_/ /_/ / ,< / /_/ / (__  )  / /_/ / /_/ / /_/ __/ / /  __(__  ) 
+/ /_/ / / /_/ /_/ / ,< / /_/ / (__  )  / /_/ / /_/ / /_/ __/ / /  __(__  )
 \____/ /___/\____/_/|_|\__,_/ /____/  /_____/\____/\__/_/ /_/_/\___/____/
 
 EOF
@@ -26,6 +26,11 @@ echon() {
   echo "\n$@"
 }
 
+_is_installed() {
+  pacman -Qi $1 > /dev/null
+  echo $?
+}
+
 echon "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
@@ -33,7 +38,7 @@ echon "Making local folders"
 mkdir -p $HOME/.local/bin
 
 if ! command -v yay &> /dev/null; then
-  echon "Installing yay as it wasn't found"
+  echon "Installing yay as an aur manager as it wasn't found"
   pushd ~/.local/src/
   git clone https://aur.archlinux.org/yay.git
   pushd yay
@@ -42,12 +47,7 @@ if ! command -v yay &> /dev/null; then
   popd
 fi
 
-_is_installed() {
-  pacman -Qi $1 > /dev/null
-  echo $?
-}
-
-echon "Installing packages"
+echon "Installing system packages"
 toinstall=()
 for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh p7zip ripgrep starship stow tmux wget zsh ueberzug --noconfirm
 do
@@ -62,6 +62,7 @@ fi
 if [[ "${toinstall[@]}" != "" ]]; then
   sudo pacman -S "${toinstall[@]}" --noconfirm
 fi
+
 echo "Installing aur packages"
 toinstall=()
 for pkg in brave-bin google-chrome nerd-fonts-fira-code visual-studio-code-bin; do
@@ -87,7 +88,7 @@ do
   fi
 done
 
-echon "Downloading dotfiles"
+echon "Downloading the dotfiles repo"
 if [ -d $HOME/.dotfiles ]; then
   echo "Please remove existing .dotfiles before installing these ones"
   exit 1
@@ -105,6 +106,7 @@ do
   stow -t $HOME $item
 done
 pushd ../global
+echo "Installing starship config"
 stow -t $HOME starship
 popd
 popd

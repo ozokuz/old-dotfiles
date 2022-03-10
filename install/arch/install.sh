@@ -30,7 +30,7 @@ echon "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
 echon "Making local folders"
-mkdir -p $HOME/.local/{bin,src}
+mkdir -p $HOME/.local/bin
 
 if ! command -v yay &> /dev/null; then
   echon "Installing yay as it wasn't found"

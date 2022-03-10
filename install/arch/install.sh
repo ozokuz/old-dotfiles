@@ -120,6 +120,8 @@ systemctl enable ssh-agent --user
 
 echon "Installing pnpm"
 curl -fsSL https://get.pnpm.io/install.sh | sh -
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
 
 echon "Installing Node 16"
 pnpm env use --global 16

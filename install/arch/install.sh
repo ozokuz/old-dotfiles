@@ -73,15 +73,6 @@ done
 if [[ "${toinstall[@]}" != "" ]]; then
   yay -S "${toinstall[@]}"
 fi
-echo "Installing multimc"
-if [[ "$(_is_installed $pkg)" != "0"]]; then
-  pushd ~/.local/src/
-  git clone https://github.com/MultiMC/multimc-pkgbuild.git
-  pushd multimc-pkgbuild
-  makepkg -si
-  popd
-  popd
-fi
 
 echon "Backing up existing files"
 BACKUP_DIR=$HOME/.dotfiles-backup

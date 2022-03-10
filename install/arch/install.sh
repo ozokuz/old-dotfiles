@@ -129,3 +129,5 @@ pnpm env use --global 16
 echon "Installing development tools"
 pnpm add -g nx@latest yarn@latest npm@latest
 
+echon "Changing default shell to zsh"
+chsh -s /bin/zsh

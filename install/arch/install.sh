@@ -23,27 +23,28 @@ popd() {
 }
 
 echon() {
-  echo "\n$@"
+  echo -e "\n$@"
 }
 
 _is_installed() {
-  pacman -Qi $1 > /dev/null
+  pacman -Qi $1 &> /dev/null
   echo $?
 }
 
 echon "Updating packages before installing dotfiles"
 sudo pacman -Syu --noconfirm
 
-echon "Making local folders"
+echon "Making local bin folder"
 mkdir -p $HOME/.local/bin
 
 if ! command -v yay &> /dev/null; then
   echon "Installing yay as an aur manager as it wasn't found"
-  pushd ~/.local/src/
+  pushd /tmp
   git clone https://aur.archlinux.org/yay.git
   pushd yay
   makepkg -si
   popd
+  rm -rf yay
   popd
 fi
 
@@ -66,7 +67,7 @@ fi
 echo "Installing aur packages"
 toinstall=()
 for pkg in brave-bin google-chrome nerd-fonts-fira-code visual-studio-code-bin; do
-  if [[ "$(_is_installed $pkg)" == "0"]]; then
+  if [[ "$(_is_installed $pkg)" == "0" ]]; then
     continue
   fi
   toinstall+=($pkg)
@@ -133,3 +134,4 @@ pnpm add -g nx@latest yarn@latest npm@latest
 
 echon "Changing default shell to zsh"
 chsh -s /bin/zsh
+

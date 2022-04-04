@@ -11,3 +11,11 @@
 [core]
         autocrlf = input
         sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+[alias]
+	s = status
+	c = commit
+	a = add
+	ap = add -p
+	ps = push
+	pl = pull
+	d = diff

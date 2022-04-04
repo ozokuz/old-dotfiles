@@ -28,19 +28,30 @@ export EDITOR="nvim"
 export PNPM_HOME="/home/ozoku/.local/share/pnpm"
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PNPM_HOME:$PATH"
 
+# Aliases
+
+# Code Editing
 alias c="code"
 alias v="$EDITOR"
+alias vf="fzf | xargs $EDITOR"
+
+# Directory Listing
 alias le="exa"
 alias ll="le -l --icons"
 alias l="ll -a"
 alias lt="le -Ta --icons"
 alias ltl="lt -l"
+
+# Git
 alias gs="git status"
 alias gc="git commit"
 alias ga="git add"
+alias gap="git add -p"
+alias gd="git diff"
 alias gpl="git pull"
 alias gps="git push"
-alias vf="fzf | xargs $EDITOR"
+
+# Other
 alias cl="clear"
 
 setopt auto_cd

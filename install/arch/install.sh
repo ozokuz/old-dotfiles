@@ -119,6 +119,8 @@ echon "Installing sdkman"
 curl -s "https://get.sdkman.io" | bash
 
 echon "Enabling ssh-agent service for current user"
+mkdir -p $HOME/.config/systemd/user
+ln -s $HOME/.dotfiles/linux/systemd/user/ssh-agent.service $HOME/.config/systemd/user/ssh-agent.service
 systemctl enable ssh-agent --user
 
 echon "Installing pnpm"

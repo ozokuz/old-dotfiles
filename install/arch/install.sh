@@ -61,7 +61,7 @@ if [[ $(pacman -Qg base-devel | wc -l) != 24 ]]; then
   toinstall+=("base-devel")
 fi
 if [[ "${toinstall[@]}" != "" ]]; then
-  sudo pacman -S "${toinstall[@]}" --noconfirm
+  sudo pacman -S "${toinstall[@]}" --noconfirm --needed
 fi
 
 echo "Installing aur packages"
@@ -73,7 +73,7 @@ for pkg in brave-bin google-chrome nerd-fonts-fira-code visual-studio-code-bin; 
   toinstall+=($pkg)
 done
 if [[ "${toinstall[@]}" != "" ]]; then
-  yay -S "${toinstall[@]}"
+  yay -S "${toinstall[@]}" --noconfirm --needed
 fi
 
 echon "Backing up existing files"

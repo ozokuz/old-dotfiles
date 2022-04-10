@@ -50,7 +50,7 @@ fi
 
 echon "Installing system packages"
 toinstall=()
-for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh p7zip ripgrep starship stow tmux wget zsh ueberzug --noconfirm
+for pkg in alacritty bat cmake curl docker docker-compose exa fd fzf git git-lfs github-cli htop ksshaskpass lolcat luajit luarocks neofetch neovim ninja openssh p7zip ripgrep starship stow tmux wget zsh ueberzug
 do
   if [[ "$(_is_installed $pkg)" == "0" ]]; then
     continue

@@ -1,6 +1,6 @@
 [user]
-        name = Ozoku
-        email = 19756856+ozokuz@users.noreply.github.com
+	name = Ozoku
+	email = 19756856+ozokuz@users.noreply.github.com
 [color]
         ui = true
 [filter "lfs"]

@@ -38,6 +38,11 @@ loop 9 {
 ; ActiveWindowBorderColour(66, 165, 245)
 ; ActiveWindowBorder("enable")
 
+; Hyper-V Rule
+FloatRule("exe", "vmconnect.exe")
+
+; Path of Building Community Rule
+FloatRule("class", "SimpleGraphic Console Class")
 ; Steam Rule
 FloatRule("exe", "steamwebhelper.exe")
 

@@ -194,4 +194,7 @@ return
 WinMinimize, A
 return
 
+!f::
+ToggleFloat()
+return
 

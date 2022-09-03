@@ -43,6 +43,7 @@ FloatRule("exe", "vmconnect.exe")
 
 ; Path of Building Community Rule
 FloatRule("class", "SimpleGraphic Console Class")
+
 ; Steam Rule
 FloatRule("exe", "steamwebhelper.exe")
 
@@ -188,11 +189,11 @@ WinClose, A
 return
 
 !t::
-Run, wt.exe
+Run, explorer.exe C:\Users\Ozoku\AppData\Local\Microsoft\WindowsApps\wt.exe
 return
 
 !b::
-Run, C:\Users\Ozoku\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe
+Run, explorer.exe C:\Users\Ozoku\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe
 return
 
 !w::

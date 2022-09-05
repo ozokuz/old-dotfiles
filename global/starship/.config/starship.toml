@@ -1,19 +1,19 @@
 add_newline = true
-format = """$username$hostname$git_branch$git_status$character$directory"""
+format = """$username$hostname$git_branch$git_status$directory"""
 
 [username]
 show_always = true
-format = "[](#3A6AC1)[$user ]($style)"
-style_user = "bold bg:#3A6AC1 #FFFF00"
+format = "[](#5c73e6)[$user ]($style)"
+style_user = "bold bg:#5c73e6 #29d916"
 
 [hostname]
 ssh_only = false
-format = "[@](bold bg:#3A6AC1 white)[ $hostname ]($style)[](#3A6AC1 bg:black)"
-style = "bold bg:#3A6AC1 #FF00FF"
+format = "[@](bold bg:#5c73e6 #cad3f5)[ $hostname ]($style)[](#5c73e6 bg:#24283B)"
+style = "bold bg:#5c73e6 #cc1fbd"
 
 [git_branch]
 format = "[ $symbol$branch ]($style)"
-style = "bold bg:black purple"
+style = "bold bg:#24283B #40a02b"
 
 [git_status]
 format = "[\\[$all_status$ahead_behind\\] ]($style)"
@@ -28,15 +28,9 @@ modified = "M"
 staged = "+"
 renamed = ">"
 deleted = "x"
-style = "bold bg:black red"
-
-[character]
-format = "[](black bg:#FF479C)$symbol[](bg:#770077 #FF479C)"
-success_symbol = "[ > ](bold bg:#FF479C #00FF00)"
-error_symbol = "[ x ](bold bg:#FF479C #FF0000)"
-vicmd_symbol = "[ v ](bold bg:#FF479C #0000FF)"
+style = "bold bg:#24283B #e64553"
 
 [directory]
-format = "[ $path]($style)[$read_only]($read_only_style)[ ](bg:#770077)[](#770077) "
-style = "bold bg:#770077"
+format = "[](#24283B bg:#b324a7)[ $path]($style)[$read_only]($read_only_style)[ ](bg:#b324a7)[](#b324a7) "
+style = "bold bg:#b324a7"
 fish_style_pwd_dir_length = 1

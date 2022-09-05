@@ -18,7 +18,7 @@ bars:
       windows_app_bar: true
     dimensions:
       width: "100%"
-      height: 32
+      height: 48
     padding:
       top: 0
       left: 0
@@ -26,8 +26,8 @@ bars:
       right: 0
     widgets:
       left:   ["komorebi_workspaces", "active_window"]
-      center: []
-      right:  ["weather", "clock"]
+      center: ["clock"]
+      right:  ["weather"]
 
 widgets:
   active_window:
@@ -57,7 +57,7 @@ widgets:
         label_workspace_btn: "{name}"
         label_default_name: "{index}"
         label_zero_index: false
-        hide_empty_workspaces: true
+        hide_empty_workspaces: false
 
   komorebi_active_layout:
     type: "komorebi.active_layout.ActiveLayoutWidget"
@@ -65,9 +65,9 @@ widgets:
       hide_if_offline: false
       label: "{icon}"
       layout_icons:
-        bsp: "[\\\\]"
-        columns: "[||]"
-        rows: "[==]"
+        bsp: "\uf0ce"
+        columns: "\uf0db"
+        rows: "\uf0c9"
         vertical_stack: "[V]="
         horizontal_stack: "[H]="
         ultrawide_vertical_stack: "||="
@@ -83,10 +83,10 @@ widgets:
   weather:
     type: "yasb.custom.CustomWidget"
     options:
-      label: "\U0001f326 {data}"
+      label: "\U0001f326 Weather: {data}"
       label_alt: ""
       class_name: "weather-widget"
       exec_options:
-        run_cmd: "curl.exe wttr.in/Hameenlinna?format=\"%l:+%t\""
+        run_cmd: "curl.exe wttr.in/Hameenlinna?format=\"%t\""
         # run every hour
         run_interval: 3600000

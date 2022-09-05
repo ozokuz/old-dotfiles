@@ -1,10 +1,12 @@
 #SingleInstance Force
+#NoEnv
 
-; You can generate a fresh version of this file with "komorebic ahk-library"
+; Komorebi autohotkey library
 #Include %A_ScriptDir%\komorebic.lib.ahk
-; https://github.com/LGUG2Z/komorebi/#generating-common-application-specific-configurations
+; Default window rules
 #Include %A_ScriptDir%\komorebi.generated.ahk
 
+; Quit komorebi & yasb when quitting autohotkey
 OnExit("komorebic_stop")
 komorebic_stop()
 {
@@ -13,30 +15,30 @@ komorebic_stop()
     return
 }
 
+
+; Generic Behaviour
 ; Default to minimizing windows when switching workspaces
 WindowHidingBehaviour("minimize")
-
 ; Set cross-monitor move behaviour to insert instead of swap
 CrossMonitorMoveBehaviour("insert")
-
-; Enable hot reloading of changes to this file
-; WatchConfiguration("enable")
+; Configure the invisible border dimensions
+InvisibleBorders(7, 0, 14, 7)
+; Change mouse focus settings
+ToggleMouseFollowsFocus()
+ToggleFocusFollowsMouse("windows")
 
 ; Ensure workspaces are created
 EnsureWorkspaces(0, 9)
+; Workspace Configuration
+RunWait, pwsh.exe "C:\Users\%A_UserName%\komorebi-ws.ps1", , Hide
 
-; Configure the invisible border dimensions
-InvisibleBorders(7, 0, 14, 7)
+; Custom Window Rules
+; iCUE Rule
+IdentifyTrayApplication("exe", "iCUE.exe")
+IdentifyBorderOverflowApplication("exe", "iCUE.exe")
 
-; Name the workspaces on all displays
-loop 9 {
-  wsnum := "" %A_Index%
-  WorkspaceName(0, %A_Index% - 1, %wsnum%)
-}
-
-; Make the active window have a border
-; ActiveWindowBorderColour(66, 165, 245)
-; ActiveWindowBorder("enable")
+; Authy Rule
+FloatRule("exe", "Authy Desktop.exe")
 
 ; Hyper-V Rule
 FloatRule("exe", "vmconnect.exe")
@@ -53,6 +55,7 @@ IdentifyTrayApplication("exe", "Overwolf.exe")
 IdentifyBorderOverflowApplication("exe", "Overwolf.exe")
 
 ; f.lux Rules
+FloatRule("exe", "flux.exe")
 IdentifyTrayApplication("exe", "flux.exe")
 
 ; LoR Master Tracker Rules
@@ -65,16 +68,14 @@ WorkspaceRule("exe", "WhatsApp.exe", 0, 7)
 WorkspaceRule("exe", "Spotify.exe", 0, 8)
 WorkspaceRule("exe", "WaveLink.exe", 0, 8)
 
-; Change mouse focus settings
-ToggleMouseFollowsFocus()
-ToggleFocusFollowsMouse("windows")
-
 ; Allow komorebi to start managing windows
 CompleteConfiguration()
 
 ; Start yasb
-Run, pythonw "C:\Users\Ozoku\AppData\Local\Programs\yasb\src\main.py", , Hide
+Run, pythonw "C:\Users\%A_UserName%\AppData\Local\Programs\yasb\src\main.py", , Hide
 
+
+; Keybinds
 ; Change the focused window, Alt + Vim direction keys (HJKL)
 !h::
 Focus("left")
@@ -188,18 +189,22 @@ return
 WinClose, A
 return
 
+; Open Windows Terminal as normal user
 !t::
 Run, explorer.exe C:\Users\Ozoku\AppData\Local\Microsoft\WindowsApps\wt.exe
 return
 
+; Open Brave
 !b::
 Run, explorer.exe C:\Users\Ozoku\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe
 return
 
+; Minimize Window
 !w::
 WinMinimize, A
 return
 
+; Toggle Float
 !f::
 ToggleFloat()
 return

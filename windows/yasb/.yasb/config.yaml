@@ -87,6 +87,6 @@ widgets:
       label_alt: ""
       class_name: "weather-widget"
       exec_options:
-        run_cmd: "curl.exe wttr.in/Hameenlinna?format=\"%t\""
+        run_cmd: "curl.exe wttr.in/?format=\"%t\""
         # run every hour
         run_interval: 3600000

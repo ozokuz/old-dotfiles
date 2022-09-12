@@ -1,4 +1,4 @@
-$komorebic = "C:\Users\Ozoku\scoop\apps\komorebi\current\komorebic.exe"
+$komorebic = "C:\Users\$env:username\scoop\apps\komorebi\current\komorebic.exe"
 
 for ($i = 0; $i -lt 9; $i++) {
   & $komorebic workspace-padding 0 $i 8

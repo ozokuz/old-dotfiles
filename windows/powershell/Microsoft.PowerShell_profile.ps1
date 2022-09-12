@@ -16,14 +16,14 @@ Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory
 # Custom Commands
 ## Java
 function java8 {
-  $ENV:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.312.7-hotspot"
+  $ENV:JAVA_HOME = "C:\Users\$env:username\scoop\apps\temurin8-jdk\current"
   $ENV:PATH = "$ENV:JAVA_HOME\bin;$ENV:PATH"
 
   java -version
 }
 
 function java17 {
-  $ENV:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.1.12-hotspot"
+  $ENV:JAVA_HOME = "C:\Users\$env:username\scoop\apps\temurin17-jdk\current"
   $ENV:PATH = "$ENV:JAVA_HOME\bin;$ENV:PATH"
 
   java -version

@@ -101,7 +101,7 @@ fi
 
 echon "Installing dotfiles"
 pushd $HOME/.dotfiles/linux
-for item in alacritty dircolors git nvim tmux zsh plasma
+for item in alacritty dircolors git tmux zsh plasma
 do
   echo "Installing $item config"
   stow -t $HOME $item
@@ -110,6 +110,11 @@ pushd ../global
 echo "Installing starship config"
 stow -t $HOME starship
 popd
+popd
+
+pushd $HOME/.config
+echo "Installing neovim configs"
+git clone https://github.com/ozokuz/configs.nvim nvim
 popd
 
 echon "Installing zplug"

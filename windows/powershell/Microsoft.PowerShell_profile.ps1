@@ -49,6 +49,22 @@ function zz {
   Invoke-FuzzyZLocation
 }
 
+$editorconfig = @"
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+indent_style = space
+indent_size = 2
+max_line_length = 80
+"@
+
+## Create EditorConfig
+function ec {
+  echo $editorconfig | Out-File .\.editorconfig
+}
+
 # Aliases
 Set-Alias v nvim
 Set-Alias l ls

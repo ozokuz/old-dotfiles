@@ -36,6 +36,7 @@ RunWait, pwsh.exe "C:\Users\%A_UserName%\komorebi-ws.ps1", , Hide
 ; iCUE Rule
 IdentifyTrayApplication("exe", "iCUE.exe")
 IdentifyBorderOverflowApplication("exe", "iCUE.exe")
+FloatRule("class", "CUETrayMenu")
 
 ; Authy Rule
 FloatRule("exe", "Authy Desktop.exe")
@@ -48,6 +49,9 @@ FloatRule("class", "SimpleGraphic Console Class")
 
 ; Steam Rule
 FloatRule("exe", "steamwebhelper.exe")
+
+; PuyoVS Rule
+FloatRule("exe", "PuyoVS.exe")
 
 ; Overwolf Rules
 ManageRule("title", "CurseForge")

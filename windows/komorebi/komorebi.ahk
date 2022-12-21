@@ -30,6 +30,7 @@ RunWait, pwsh.exe "C:\Users\%A_UserName%\komorebi-ws.ps1", , Hide
 ; Change mouse focus settings
 ToggleMouseFollowsFocus()
 ToggleFocusFollowsMouse("windows")
+
 ; Custom Window Rules
 ; iCUE Rule
 IdentifyTrayApplication("exe", "iCUE.exe")
@@ -69,7 +70,7 @@ IdentifyBorderOverflowApplication("exe", "LoRMasterTracker.exe")
 CompleteConfiguration()
 
 ; Start yasb
-Run, pythonw "C:\Users\%A_UserName%\AppData\Local\Programs\yasb\src\main.py", , Hide
+Run, pwsh.exe "C:\Users\%A_UserName%\komorebi-yasb.ps1", , Hide
 
 
 ; Keybinds

@@ -23,15 +23,13 @@ WindowHidingBehaviour("minimize")
 CrossMonitorMoveBehaviour("insert")
 ; Configure the invisible border dimensions
 InvisibleBorders(7, 0, 14, 7)
-; Change mouse focus settings
-ToggleMouseFollowsFocus()
-ToggleFocusFollowsMouse("windows")
 
-; Ensure workspaces are created
-EnsureWorkspaces(0, 9)
 ; Workspace Configuration
 RunWait, pwsh.exe "C:\Users\%A_UserName%\komorebi-ws.ps1", , Hide
 
+; Change mouse focus settings
+ToggleMouseFollowsFocus()
+ToggleFocusFollowsMouse("windows")
 ; Custom Window Rules
 ; iCUE Rule
 IdentifyTrayApplication("exe", "iCUE.exe")
@@ -66,11 +64,6 @@ IdentifyTrayApplication("exe", "flux.exe")
 FloatRule("exe", "LoRMasterTracker.exe")
 IdentifyTrayApplication("exe", "LoRMasterTracker.exe")
 IdentifyBorderOverflowApplication("exe", "LoRMasterTracker.exe")
-
-; Workspace Rules
-WorkspaceRule("exe", "WhatsApp.exe", 0, 7)
-WorkspaceRule("exe", "Spotify.exe", 0, 8)
-WorkspaceRule("exe", "WaveLink.exe", 0, 8)
 
 ; Allow komorebi to start managing windows
 CompleteConfiguration()

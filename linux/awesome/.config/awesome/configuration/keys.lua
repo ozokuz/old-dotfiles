@@ -1,9 +1,9 @@
-local gears = require('gears')
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
+
 local settings = require('settings')
 local playerctl = require('utils.playerctl')
-local menu = require('configuration.menu')
+local menu = require('ui.popups.menu')
 
 local super = 'Mod4'
 
@@ -16,11 +16,12 @@ local k = awful.key
 local keys = { mouse = {}, keyboard = {} }
 
 -- stylua: ignore start
-keys.keyboard.global = gears.table.join(
+
 ----
 -- System
 ----
--- Show keybindings
+awful.keyboard.append_global_keybindings({
+  -- Show keybindings
   k(
     { super }, 'F1',
     hotkeys_popup.show_help,
@@ -29,10 +30,13 @@ keys.keyboard.global = gears.table.join(
   -- Quit Awesome
   k(
     { super, 'Shift' }, 'q',
-    function()
-      awesome.quit()
-    end,
+    awesome.quit,
     { description = 'Quit', group = 'System' }
+  ),
+  k(
+    { super, 'Shift' }, 'r',
+    awesome.restart,
+    { description = 'Restart Awesome', group = 'System' }
   ),
   -- Configure Network
   k(
@@ -66,8 +70,13 @@ keys.keyboard.global = gears.table.join(
     end,
     { description = 'Command Runner', group = 'System' }
   ),
-  ----
-  -- Client
+})
+
+
+----
+-- Client
+----
+awful.keyboard.append_global_keybindings({
   -- Focus client by direction
   k(
     { super }, 'k',
@@ -97,9 +106,109 @@ keys.keyboard.global = gears.table.join(
     end,
     { description = 'Focus Right', group = 'Client' }
   ),
-  ----
-  -- Apps
-  ----
+  -- Swap client by direction
+  k(
+    { super, 'Shift' }, 'k',
+    function()
+      awful.client.swap.bydirection('up')
+    end,
+    { description = 'Focus Up', group = 'Client' }
+  ),
+  k(
+    { super, 'Shift' }, 'j',
+    function()
+      awful.client.swap.bydirection('down')
+    end,
+    { description = 'Focus Down', group = 'Client' }
+  ),
+  k(
+    { super, 'Shift' }, 'h',
+    function()
+      awful.client.swap.bydirection('left')
+    end,
+    { description = 'Focus Left', group = 'Client' }
+  ),
+  k(
+    { super, 'Shift' }, 'l',
+    function()
+      awful.client.swap.bydirection('right')
+    end,
+    { description = 'Focus Right', group = 'Client' }
+  ),
+})
+
+----
+-- Screen
+----
+awful.keyboard.append_global_keybindings({
+  k(
+    { super, 'Control' }, 'h',
+    function()
+      awful.screen.focus_bydirection('left')
+    end,
+    { description = 'Focus Left Screen', group = 'Screen' }
+  ),
+  k(
+    { super, 'Control' }, 'l',
+    function()
+      awful.screen.focus_bydirection('right')
+    end,
+    { description = 'Focus Right Screen', group = 'Screen' }
+  ),
+})
+
+----
+-- Layout
+----
+awful.keyboard.append_global_keybindings({
+  k(
+    { super }, 'u',
+    function()
+      awful.layout.inc(-1)
+    end,
+    { description = 'Previous Layout', group = 'Layout' }
+  ),
+  k(
+    { super }, 'i',
+    function()
+      awful.layout.inc(1)
+    end,
+    { description = 'Next Layout', group = 'Layout' }
+  ),
+  k(
+    { super, 'Shift' }, 'u',
+    function()
+      awful.tag.incnmaster(-1, nil, true)
+    end,
+    { description = 'Decrease Master Count', group = 'Layout' }
+  ),
+  k(
+    { super, 'Shift' }, 'i',
+    function()
+      awful.tag.incnmaster(1, nil, true)
+    end,
+    { description = 'Increase Master Count', group = 'Layout' }
+  ),
+  k(
+    { super, 'Control' }, 'u',
+    function()
+      awful.tag.incncol(-1)
+    end,
+    { description = 'Decrease Column Count', group = 'Layout' }
+  ),
+  k(
+    { super, 'Control' }, 'i',
+    function()
+      awful.tag.incncol(1)
+    end,
+    { description = 'Increase Column Count', group = 'Layout' }
+  ),
+})
+
+----
+-- Apps
+----
+awful.keyboard.append_global_keybindings({
   -- Web Browser
   k(
     { super }, 'w',
@@ -156,7 +265,12 @@ keys.keyboard.global = gears.table.join(
     end,
     { description = 'Authenticator', group = 'Apps' }
   ),
-  -- Utils
+})
+
+----
+-- Utils
+----
+awful.keyboard.append_global_keybindings({
   -- Toggle Screenkeys
   k(
     { super }, 'ScrollLock',
@@ -165,7 +279,12 @@ keys.keyboard.global = gears.table.join(
     end,
     { description = 'Toggle Screenkeys', group = 'Utils' }
   ),
-  -- Media Controls
+})
+
+----
+-- Media Controls
+----
+awful.keyboard.append_global_keybindings({
   -- Play / Pause
   k(
     {}, 'XF86AudioPlay',
@@ -190,7 +309,12 @@ keys.keyboard.global = gears.table.join(
     end,
     { description = 'Next', group = 'Media' }
   ),
-  -- Screenshot
+})
+
+----
+-- Screenshot
+----
+awful.keyboard.append_global_keybindings({
   -- Area
   k(
     { super }, 'less',
@@ -198,148 +322,131 @@ keys.keyboard.global = gears.table.join(
       awful.spawn('flameshot gui')
     end,
     { description = 'Screenshot Area', group = 'Capture' }
-  )
-)
+  ),
+})
 
-for i = 1, 9 do
-  keys.keyboard.global = gears.table.join(
-    keys.keyboard.global,
-    -- Focus Tag
-    k(
-      { super }, '#' .. i + 9,
-      function()
-        local screen = awful.screen.focused()
-        local tag = screen.tags[i]
+----
+-- Tags
+----
+awful.keyboard.append_global_keybindings({
+  -- Focus Tag
+  k({
+    modifiers = { super },
+    keygroup = "numrow",
+    description = 'Switch to Tag',
+    group = 'Tags',
+    on_press = function(index)
+      local screen = awful.screen.focused()
+      local tag = screen.tags[index]
+      if tag then
+        tag:view_only()
+      end
+    end
+  }),
+  k({
+    modifiers = { super, 'Control' },
+    keygroup = "numrow",
+    description = 'Toggle Tag',
+    group = 'Tags',
+    on_press = function(index)
+      local screen = awful.screen.focused()
+      local tag = screen.tags[index]
+      if tag then
+        awful.tag.viewtoggle(tag)
+      end
+    end
+  }),
+  k({
+    modifiers = { super, 'Shift' },
+    keygroup = "numrow",
+    description = 'Move Focused to Tag',
+    group = 'Tags',
+    on_press = function(index)
+      if client.focus then
+        local tag = client.focus.screen.tags[index]
         if tag then
-          tag:view_only()
+          client.focus:move_to_tag(tag)
         end
-      end,
-      { description = 'Switch to Tag #', group = 'Tags' }
-    ),
-    -- Toggle Tag
-    k(
-      { super, 'Control' }, '#' .. i + 9,
-      function()
-        local screen = awful.screen.focused()
-        local tag = screen.tags[i]
+      end
+    end
+  }),
+  k({
+    modifiers = { super, 'Control', 'Shift' },
+    keygroup = "numrow",
+    description = 'Toggle Focused on Tag',
+    group = 'Tags',
+    on_press = function(index)
+      if client.focus then
+        local tag = client.focus.screen.tags[index]
         if tag then
-          awful.tag.viewtoggle(tag)
+          client.focus:toggle_tag(tag)
         end
-      end,
-      { description = 'Toggle Tag #', group = 'Tags' }
-    ),
-    -- Move Focused to Tag
-    k(
-      { super, 'Shift' }, '#' .. i + 9,
-      function()
-        if client.focus then
-          local tag = client.focus.screen.tags[i]
-          if tag then
-            client.focus:move_to_tag(tag)
-          end
-        end
-      end,
-      { description = 'Move Focused to Tag #', group = 'Tags' }
-    ),
-    -- Toggle Focused on Tag
-    k(
-      { super, 'Control', 'Shift' }, '#' .. i + 9,
-      function()
-        if client.focus then
-          local tag = client.focus.screen.tags[i]
-          if tag then
-            client.focus:toggle_tag(tag)
-          end
-        end
-      end,
-      { description = 'Toggle Focused on Tag #', group = 'Tags' }
-    )
-  )
-end
+      end
+    end
+  }),
+})
 
-keys.mouse.global = gears.table.join(
+awful.mouse.append_global_mousebindings({
   awful.button(
     {}, awful.button.names.RIGHT,
     function()
       menu:toggle()
     end
   )
-)
+})
 
-keys.keyboard.client = gears.table.join(
-  k(
-    { super }, 'm',
-    function(c)
-      c.maximized = not c.maximized
-      c:raise()
-    end,
-    { description = 'Toggle Maximized', group = 'window' }
-  ),
-  k(
-    { super }, 'f',
-    awful.client.floating.toggle,
-    { description = 'Toggle Floating', group = 'window' }
-  ),
-  k(
-    { super }, 'q',
-    function(c)
-      c:kill()
-    end,
-    { description = 'Close Window', group = 'window' }
-  )
-)
+client.connect_signal('request::default_keybindings', function()
+  awful.keyboard.append_client_keybindings({
+    -- Close Window
+    k(
+      { super }, 'q',
+      function(c)
+        c:kill()
+      end,
+      { description = 'Close Window', group = 'window' }
+    ),
+    -- Toggle Maximized
+    k(
+      { super }, 'm',
+      function(c)
+        c.maximized = not c.maximized
+        c:raise()
+      end,
+      { description = 'Toggle Maximized', group = 'window' }
+    ),
+    -- Toggle Floating
+    k(
+      { super }, 'f',
+      awful.client.floating.toggle,
+      { description = 'Toggle Floating', group = 'window' }
+    ),
+  })
+end)
 
-keys.mouse.client = gears.table.join(
-  awful.button(
-    {}, awful.button.names.LEFT,
-    function(c)
-      c:emit_signal('request::activate', 'mouse_click', { raise = true })
-    end
-  ),
-  awful.button(
-    { super }, awful.button.names.LEFT,
-    function(c)
-      c:emit_signal('request::activate', 'mouse_click', { raise = true })
-      awful.mouse.client.move(c)
-    end
-  ),
-  awful.button(
-    { super }, awful.button.names.RIGHT,
-    function(c)
-      c:emit_signal('request::activate', 'mouse_click', { raise = true })
-      awful.mouse.client.resize(c)
-    end
-  )
-)
-
-keys.mouse.taglist = gears.table.join(
-  awful.button(
-    {}, awful.button.names.LEFT,
-    function(t)
-      t:view_only()
-    end
-  ),
-  awful.button(
-    { super }, awful.button.names.LEFT,
-    function(t)
-      if client.focus then
-        client.focus:move_to_tag(t)
+client.connect_signal('request::default_mousebindings', function()
+  awful.mouse.append_client_mousebindings({
+    awful.button(
+      {}, awful.button.names.LEFT,
+      function(c)
+        c:emit_signal('request::activate', 'mouse_click', { raise = true })
       end
-    end
-  ),
-  awful.button(
-    {}, awful.button.names.RIGHT,
-    awful.tag.viewtoggle
-  ),
-  awful.button(
-    { super }, awful.button.names.RIGHT,
-    function(t)
-      if client.focus then
-        client.focus:toggle_tag(t)
+    ),
+    awful.button(
+      { super }, awful.button.names.LEFT,
+      function(c)
+        c:emit_signal('request::activate', 'mouse_click', { raise = true })
+        awful.mouse.client.move(c)
       end
-    end
-  )
-)
+    ),
+    awful.button(
+      { super }, awful.button.names.RIGHT,
+      function(c)
+        c:emit_signal('request::activate', 'mouse_click', { raise = true })
+        awful.mouse.client.resize(c)
+      end
+    ),
+  })
+end)
 -- stylua: ignore end
 
 return keys

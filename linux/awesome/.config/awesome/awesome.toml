@@ -12,3 +12,6 @@ any = true
 
 [mouse]
 any = true
+
+[tag]
+any = true

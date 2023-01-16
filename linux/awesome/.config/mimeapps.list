@@ -1,10 +1,11 @@
 
 [Default Applications]
+text/plain=nvim.desktop
+text/x-shellscript=nvim.desktop
+application/x-sh=nvim.desktop
 text/html=brave-browser.desktop
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
-x-scheme-handler/about=brave-browser.desktop
-x-scheme-handler/unknown=brave-browser.desktop
 image/gif=sxiv.desktop
 image/png=sxiv.desktop
 image/jpeg=sxiv.desktop

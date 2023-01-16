@@ -1,10 +1,31 @@
 ## Environment
 
+# XDG
+set -x XDG_CONFIG_HOME "$HOME/.config"
+set -x XDG_CACHE_HOME "$HOME/.cache"
+set -x XDG_DATA_HOME "$HOME/.local/share"
+set -x XDG_STATE_HOME "$HOME/.local/state"
+# Custom Home Directories
+set -x CHD_SRC_HOME "$HOME/.local/src"
+set -x CHD_BIN_HOME "$HOME/.local/bin" 
+
+# Clean Home
+set -x GOPATH "$CHD_SRC_HOME/go"
+set -x CARGO_HOME "$XDG_DATA_HOME/cargo"
+set -x PNPM_HOME "$XDG_DATA_HOME/pnpm"
+set -x CUDA_CACHE_PATH "$XDG_CACHE_HOME/nv"
+set -x GNUPGHOME "$XDG_DATA_HOME/gnupg"
+set -x LESSHISTFILE "$XDG_CACHE_HOME/less/history"
+set -x NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
+set -x WINEPREFIX "$XDG_DATA_HOME/wine"
+set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
+
 # Theming
 set -x QT_STYLE_OVERRIDE "kvantum-dark"
 set -x QT_QPA_PLATFORMTHEME "qt5ct"
 
 # Custom
+set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$PNPM_HOME:$PATH"
 set -x EDITOR nvim
 set -x BROWSER brave
 

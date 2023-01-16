@@ -1,6 +1,14 @@
+## Environment
+
+# Theming
+set -x QT_STYLE_OVERRIDE "kvantum-dark"
+set -x QT_QPA_PLATFORMTHEME "qt5ct"
+
+# Custom
 set -x EDITOR nvim
 set -x BROWSER brave
 
+## Main
 if status is-interactive
     # No Greeting
     set fish_greeting

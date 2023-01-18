@@ -1,0 +1,13 @@
+---
+base: lua53
+globals:
+  awesome:
+    any: true
+  client:
+    any: true
+  screen:
+    any: true
+  mouse:
+    any: true
+  tag:
+    any: true

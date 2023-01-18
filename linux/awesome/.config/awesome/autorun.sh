@@ -24,3 +24,4 @@ echo "awesome.started:true" | xrdb -merge
 # Use dex to run XDG Autostart files
 dex --environment Awesome --autostart
 playerctld daemon
+xcape -e 'Super_L=Escape'

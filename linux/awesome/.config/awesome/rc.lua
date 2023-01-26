@@ -6,6 +6,7 @@ require('configuration.keys')
 require('configuration.layouts')
 require('configuration.wallpaper')
 require('ui.notifications')
+require('ui.popups.volume')
 
 local top_panel = require('ui.panels.top')
 

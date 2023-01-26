@@ -273,7 +273,7 @@ awful.keyboard.append_global_keybindings({
 awful.keyboard.append_global_keybindings({
   -- Toggle Screenkeys
   k(
-    { super }, 'ScrollLock',
+    { super }, 'Scroll_Lock',
     function()
       awful.spawn.with_shell('killall screenkey || screenkey &')
     end,
@@ -309,6 +309,41 @@ awful.keyboard.append_global_keybindings({
     end,
     { description = 'Next', group = 'Media' }
   ),
+  k(
+    {}, 'XF86AudioRaiseVolume',
+    function()
+      awful.spawn('pamixer --unmute')
+      awful.spawn.easy_async('pamixer --increase 2', function()
+        awful.spawn.easy_async('pamixer --get-volume', function(out)
+          awesome.emit_signal('module::volume_popup::set_level', tonumber(out))
+        end)
+      end)
+    end,
+    { description = 'Increase Volume', group = 'Media' }
+  ),
+  k(
+    {}, 'XF86AudioLowerVolume',
+    function()
+      awful.spawn('pamixer --unmute')
+      awful.spawn.easy_async('pamixer --decrease 2', function()
+        awful.spawn.easy_async('pamixer --get-volume', function(out)
+          awesome.emit_signal('module::volume_popup::set_level', tonumber(out))
+        end)
+      end)
+    end,
+    { description = 'Decrease Volume', group = 'Media' }
+  ),
+  k(
+    {}, 'XF86AudioMute',
+    function()
+      awful.spawn.easy_async('pamixer --toggle-mute', function()
+        awful.spawn.easy_async('pamixer --get-mute', function(out)
+          awesome.emit_signal('module::volume_popup::set_mute', string.sub(out, 1, -2) == 'true')
+        end)
+      end)
+    end,
+    { description = 'Mute', group = 'Media' }
+  )
 })
 
 ----

@@ -31,8 +31,14 @@ set -x BROWSER brave
 set -x TERMINAL alacritty
 
 if not pgrep -f "ssh-agent" >/dev/null
-    eval (ssh-agent -c)
+    if not test -d "$XDG_STATE_HOME/ssh"
+        mkdir -p "$XDG_STATE_HOME/ssh"
+    end
+    ssh-agent -c > "$XDG_STATE_HOME/ssh/agent-info"
+    sed -i '$d' "$XDG_STATE_HOME/ssh/agent-info"
 end
+
+eval (cat "$XDG_STATE_HOME/ssh/agent-info")
 
 ## Main
 if status is-interactive

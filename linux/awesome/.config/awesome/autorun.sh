@@ -25,3 +25,4 @@ echo "awesome.started:true" | xrdb -merge
 dex --environment Awesome --autostart
 playerctld daemon
 xcape -e 'Super_L=Escape'
+SSH_ASKPASS=/usr/bin/lxqt-openssh-askpass ssh-add >/dev/null </dev/null &

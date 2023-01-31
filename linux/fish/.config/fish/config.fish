@@ -28,6 +28,7 @@ set -x QT_QPA_PLATFORMTHEME "qt5ct"
 set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$PNPM_HOME:$PATH"
 set -x EDITOR nvim
 set -x BROWSER brave
+set -x TERMINAL alacritty
 
 if not pgrep -f "ssh-agent" >/dev/null
     eval (ssh-agent -c)

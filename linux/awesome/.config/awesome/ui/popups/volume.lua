@@ -5,10 +5,10 @@ local dpi = xresources.apply_dpi
 local wibox = require('wibox')
 
 local icons = {
-  muted = utf8.char(984927) .. ' ',
-  low = utf8.char(64126) .. ' ',
-  mid = utf8.char(64127) .. ' ',
-  high = utf8.char(64125) .. ' ',
+  muted = ' \u{f075f} ',
+  low = ' \u{fa7e} ',
+  mid = ' \u{fa7f} ',
+  high = ' \u{fa7d} ',
 }
 
 -- View
@@ -64,7 +64,6 @@ local layout = {
       {
         {
           layout = wibox.layout.align.horizontal,
-          expand = 'none',
           nil,
           icon,
           nil,

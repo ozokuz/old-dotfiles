@@ -1,6 +1,8 @@
 local awful = require('awful')
 local ruled = require('ruled')
 
+local blueberry = false
+
 ruled.client.connect_signal('request::rules', function()
   -- Global Rules
   ruled.client.append_rule({
@@ -18,19 +20,19 @@ ruled.client.connect_signal('request::rules', function()
   ruled.client.append_rules({
     {
       rule = { class = 'discord' },
-      properties = { screen = 2, tag = '1' },
+      properties = { screen = 2, tag = screen[2].tags[1] },
     },
     {
-      rule = { class = 'Spotify' },
-      properties = { screen = 2, tag = '9' },
+      rule = { class = 'spotify' },
+      properties = { screen = 2, tag = screen[2].tags[9] },
     },
     {
       rule = { class = 'Lutris' },
-      properties = { screen = 2, tag = '7' },
+      properties = { screen = 2, tag = screen[2].tags[7] },
     },
     {
       rule_every = { class = 'Steam', name = 'Steam' },
-      properties = { screen = 2, tag = '7' },
+      properties = { screen = 2, tag = screen[2].tags[7] },
     },
     {
       rule = { class = 'Steam' },
@@ -38,8 +40,17 @@ ruled.client.connect_signal('request::rules', function()
       properties = { floating = true },
     },
     {
-      rule = { class = 'blueberry.py' },
-      properties = { minimized = true },
+      rule = { class = 'lxqt-openssh-askpass' },
+      properties = { floating = true },
+    },
+    {
+      rule = { instance = 'Blueberry.py' },
+      callback = function(c)
+        if not blueberry then
+          blueberry = true
+          c.minimized = true
+        end
+      end,
     },
   })
 end)

@@ -1,5 +1,6 @@
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
+local naughty = require('naughty')
 
 local settings = require('settings')
 local playerctl = require('utils.playerctl')
@@ -14,6 +15,23 @@ end
 local k = awful.key
 
 local keys = { mouse = {}, keyboard = {} }
+
+local function screenshot(args)
+  local ss = awful.screenshot(args)
+
+  local function notify(self)
+    naughty.notification({
+      title = self.file_name,
+      message = 'Screenshot saved',
+      icon = self.surface,
+      icon_size = 128,
+    })
+  end
+
+  notify(ss)
+
+  return ss
+end
 
 -- stylua: ignore start
 
@@ -164,7 +182,7 @@ awful.keyboard.append_global_keybindings({
   k(
     { super }, 'u',
     function()
-      awful.layout.inc(-1)
+      awful.layout.inc( -1)
     end,
     { description = 'Previous Layout', group = 'Layout' }
   ),
@@ -178,7 +196,7 @@ awful.keyboard.append_global_keybindings({
   k(
     { super, 'Shift' }, 'u',
     function()
-      awful.tag.incnmaster(-1, nil, true)
+      awful.tag.incnmaster( -1, nil, true)
     end,
     { description = 'Decrease Master Count', group = 'Layout' }
   ),
@@ -192,7 +210,7 @@ awful.keyboard.append_global_keybindings({
   k(
     { super, 'Control' }, 'u',
     function()
-      awful.tag.incncol(-1)
+      awful.tag.incncol( -1)
     end,
     { description = 'Decrease Column Count', group = 'Layout' }
   ),
@@ -357,6 +375,14 @@ awful.keyboard.append_global_keybindings({
       awful.spawn('flameshot gui')
     end,
     { description = 'Screenshot Area', group = 'Capture' }
+  ),
+  -- Window
+  k(
+    { super, 'Shift' }, 'less',
+    function()
+      awful.spawn.with_shell('maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png')
+    end,
+    { description = 'Screenshot Window', group = 'Capture' }
   ),
 })
 

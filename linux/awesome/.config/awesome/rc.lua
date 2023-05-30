@@ -14,15 +14,15 @@ awful.spawn.with_shell('~/.config/awesome/autorun.sh')
 
 local icons = {
   {
-    '\u{fa9e}', -- Web
+    '\u{f059f}', -- Web
     '\u{f02e}', -- Bookmark
-    '\u{f718}', -- Document
-    '\u{f668}', -- Code
+    '\u{f0219}', -- Document
+    '\u{f0169}', -- Code
     '\u{e7c5}', -- Vim
-    '\u{f6e6}', -- Globe
-    '\u{f6c4}', -- Desktop
-    '\u{f962}', -- Rocket
-    '\u{f7b3}', -- Controller
+    '\u{f01e7}', -- Globe
+    '\u{f01c5}', -- Desktop
+    '\u{f427}', -- Rocket
+    '\u{f02b4}', -- Controller
   },
   {
     '\u{f066f}', -- Discord
@@ -30,7 +30,7 @@ local icons = {
     '\u{f489}', -- Terminal
     '\u{f121}', -- Code
     '\u{e615}', -- Config
-    '\u{f65e}', -- Cloud
+    '\u{f015f}', -- Cloud
     '\u{f1b6}', -- Steam
     '\u{f232}', -- WhatsApp
     '\u{f1bc}', -- Spotify

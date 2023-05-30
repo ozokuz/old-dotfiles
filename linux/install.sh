@@ -5,16 +5,15 @@ DRIVE=$1
 
 # argument 2 = nvme or something else
 DRIVE_TYPE=""
-if [ $2 == "nvme" ]; then
+if [ "$2" = "nvme" ]; then
 	DRIVE_TYPE="p"
 fi
 DRIVE_PARTITION="$DRIVE""$DRIVE_TYPE"
 
 # partition the drive
-parted $DRIVE mklabel gpt
-parted $DRIVE mkpart "EFI system partition" fat32 1MiB 301MiB
-parted $DRIVE set 1 esp on
-parted $DRIVE mkpart "Arch" btrfs 301MiB 100%
+sgdisk -o $DRIVE
+sgdisk -n 1::+300M -t 1:ef00 $DRIVE
+sgdisk -n 2::0 -t 2:8300 $DRIVE
 
 # format the partitions
 mkfs.fat -F 32 "$DRIVE_PARTITION"1

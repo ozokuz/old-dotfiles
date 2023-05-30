@@ -113,14 +113,14 @@ awful.keyboard.append_global_keybindings({
   k(
     { super }, 'h',
     function()
-      awful.client.focus.bydirection('left')
+      awful.client.focus.global_bydirection('left')
     end,
     { description = 'Focus Left', group = 'Client' }
   ),
   k(
     { super }, 'l',
     function()
-      awful.client.focus.bydirection('right')
+      awful.client.focus.global_bydirection('right')
     end,
     { description = 'Focus Right', group = 'Client' }
   ),
@@ -130,28 +130,48 @@ awful.keyboard.append_global_keybindings({
     function()
       awful.client.swap.bydirection('up')
     end,
-    { description = 'Focus Up', group = 'Client' }
+    { description = 'Swap Up', group = 'Client' }
   ),
   k(
     { super, 'Shift' }, 'j',
     function()
       awful.client.swap.bydirection('down')
     end,
-    { description = 'Focus Down', group = 'Client' }
+    { description = 'Swap Down', group = 'Client' }
   ),
   k(
     { super, 'Shift' }, 'h',
     function()
-      awful.client.swap.bydirection('left')
+      awful.client.swap.global_bydirection('left')
     end,
-    { description = 'Focus Left', group = 'Client' }
+    { description = 'Swap Left', group = 'Client' }
   ),
   k(
     { super, 'Shift' }, 'l',
     function()
-      awful.client.swap.bydirection('right')
+      awful.client.swap.global_bydirection('right')
     end,
-    { description = 'Focus Right', group = 'Client' }
+    { description = 'Swap Right', group = 'Client' }
+  ),
+  k(
+    { super, 'Shift', 'Control' }, 'h',
+    function()
+      local c = client.focus
+      if c then
+        c:move_to_screen(c.screen:get_next_in_direction('left'))
+      end
+    end,
+    { description = 'Move Left', group = 'Client' }
+  ),
+  k(
+    { super, 'Shift', 'Control' }, 'l',
+    function()
+      local c = client.focus
+      if c then
+        c:move_to_screen(c.screen:get_next_in_direction('right'))
+      end
+    end,
+    { description = 'Move Right', group = 'Client' }
   ),
 })
 

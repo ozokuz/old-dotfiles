@@ -21,10 +21,12 @@ echo 'root:$6$OT.nLJZgSe/3Xd9R$fvQ4NHgqqYaXeNhujAyxalq1FwltqODBkPwBmvF0HFTrwGF3w
 # configure pacman
 grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
 sed -Ei "s/^#(ParallelDownloads).*/\1 = 5/;/^#Color$/s/#//" /etc/pacman.conf
+sed -i '/^#\[multilib]/{N;s/\n#/\n/}' file
+sed -i 's/#\[multilib]/\[multilib]/g' /etc/pacman.conf
 pacman -Syu --noconfirm
 
 # install packages
-pacman -S --noconfirm base-devel amd-ucode grub efibootmgr os-prober alacritty bat bc btop btrfs-progs dex discord dnsmasq docker dolphin-emu exa fd fish flameshot flatpak fzf gamemode gimp git git-delta git-lfs github-cli iptables-nft jdk17-openjdk jre8-openjdk lazygit lf lib32-gamemode libfido2 libretro-desmume libretro-genesis-plus-gx lutris lxqt-openssh-askpass lxsession-gtk3 maim man-db man-pages mpv neofetch neovim networkmanager noto-fonts-emoji noto-fonts ntfs-3g nvidia nvidia-settings nvidia-utils lib32-nvidia-utils nvtop pacman-contrib pamixer pavucontrol picom pinta piper pipewire pipewire-alsa pipewire-jack pipewire-pulse playerctl plocate pulsemixer qemu-desktop qpwgraph redshift retroarch retroarch-assets-ozone ripgrep rofi screenkey sddm starship steam stow sudo sxiv thunar thunar-archive-plugin tmux ttf-liberation unzip virt-manager wireplumber xclip xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-user-dirs xdotool xorg zathura
+pacman -S --noconfirm base-devel amd-ucode grub efibootmgr os-prober alacritty bat bc btop btrfs-progs dex discord docker dolphin-emu exa fd fish flameshot flatpak fzf gamemode gimp git git-delta git-lfs github-cli jdk17-openjdk jre8-openjdk lazygit lf lib32-gamemode libfido2 libretro-desmume libretro-genesis-plus-gx lutris lxqt-openssh-askpass lxsession-gtk3 maim man-db man-pages mpv neofetch neovim networkmanager noto-fonts-emoji noto-fonts ntfs-3g nvidia nvidia-settings nvidia-utils lib32-nvidia-utils nvtop pacman-contrib pamixer pavucontrol picom pinta piper pipewire pipewire-alsa pipewire-jack pipewire-pulse playerctl plocate pulsemixer qpwgraph redshift retroarch retroarch-assets-ozone ripgrep rofi screenkey sddm starship steam stow sudo sxiv thunar thunar-archive-plugin tmux ttf-liberation unzip wireplumber xclip xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-user-dirs xdotool xorg zathura
 
 # install bootloader
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH
@@ -68,3 +70,5 @@ done
 cd /home/ozoku/.local/src/dotfiles/global
 sudo -u ozoku stow -t /home/ozoku starship
 
+# enable sudo for wheel group
+echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-wheel-sudo

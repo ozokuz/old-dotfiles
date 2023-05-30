@@ -45,6 +45,12 @@ end)
 
 require('configuration.rules')
 
+client.connect_signal('request::manage', function(c)
+  if not awesome.startup then
+    awful.client.setslave(c)
+  end
+end)
+
 client.connect_signal('mouse::enter', function(c)
   c:emit_signal('request::activate', 'mouse_enter', { raise = false })
 end)

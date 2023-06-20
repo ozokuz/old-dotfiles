@@ -241,6 +241,20 @@ awful.keyboard.append_global_keybindings({
     end,
     { description = 'Increase Column Count', group = 'Layout' }
   ),
+  k(
+    { super, 'Mod1' }, 'h',
+    function()
+      awful.tag.incmwfact( -0.025)
+    end,
+    { description = "Decrease Master Width", group = 'Layout' }
+  ),
+  k(
+    { super, 'Mod1' }, 'l',
+    function()
+      awful.tag.incmwfact(0.025)
+    end,
+    { description = "Increase Master Width", group = 'Layout' }
+  ),
 })
 
 ----

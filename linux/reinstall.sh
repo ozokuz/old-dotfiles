@@ -26,7 +26,18 @@ sed -i 's/#\[multilib]/\[multilib]/g' /etc/pacman.conf
 pacman -Syu --noconfirm
 
 # install packages
-pacman -S --noconfirm base-devel amd-ucode grub efibootmgr os-prober alacritty bat bc btop btrfs-progs dex discord docker dolphin-emu exa fd fish flameshot flatpak fzf gamemode gimp git git-delta git-lfs github-cli jdk17-openjdk jre8-openjdk lazygit lf lib32-gamemode libfido2 libretro-desmume libretro-genesis-plus-gx lutris lxqt-openssh-askpass lxsession-gtk3 maim man-db man-pages mpv neofetch neovim networkmanager noto-fonts-emoji noto-fonts ntfs-3g nvidia nvidia-settings nvidia-utils lib32-nvidia-utils nvtop pacman-contrib pamixer pavucontrol picom pinta piper pipewire pipewire-alsa pipewire-jack pipewire-pulse playerctl plocate pulsemixer qpwgraph redshift retroarch retroarch-assets-ozone ripgrep rofi screenkey sddm starship steam stow sudo sxiv thunar thunar-archive-plugin tmux ttf-liberation unzip wireplumber xclip xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-user-dirs xdotool xorg zathura
+# Base System
+pacman -S --noconfirm base-devel amd-ucode grub efibootmgr os-prober btrfs-progs bluez-plugins bluez-utils fish flatpak man-db man-pages networkmanager ntfs-3g nvidia nvidia-settings nvidia-utils pacman-contrib pipewire pipewire-alsa pipewire-jack pipewire-pulse sudo texinfo wireplumber xdg-desktop-portal xdg-user-dirs xorg
+# Desktop Environment
+pacman -S --noconfirm blueberry breeze-gtk breeze-icons dex flameshot kvantum lxqt-openssh-askpass lxsession-gtk3 maim noto-fonts-emoji pamixer pavucontrol picom piper playerctl pulsemixer qpwgraph qt5ct redshift rofi screenkey sddm ttf-firacode-nerd ttf-liberation xclip xdg-desktop-portal-gtk xdotool
+# Terminal Apps
+pacman -S --noconfirm bat bc btop docker docker-compose exa fd fzf git git-delta git-lfs github-cli htop lazygit lf neofetch neovim nvtop ripgrep starship stow tmux unzip zip
+# Desktop Apps
+pacman -S --noconfirm alacritty bitwarden discord gimp libfido2 mpv obsidian pinta sxiv thunar thunar-archive-plugin zathura
+# Gaming
+pacman -S --noconfirm dolphin-emu gamemode jdk17-openjdk jre8-openjdk lib32-gamemode lib32-nvidia-utils libretro-desmume libretro-genesis-plus-gx lutris retroarch retroarch-assets-ozone steam
+# Virtual Machines
+pacman -S --noconfirm dnsmasq iptables-nft qemu-desktop virt-manager
 
 # install bootloader
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH
@@ -53,7 +64,14 @@ cd /tmp/yay
 sudo -u ozoku makepkg --noconfirm -si
 
 # install aur packages
-sudo -u ozoku yay -S --noconfirm adw-gtk3 authy awesome-git betterlockscreen blockbench-bin brave-bin ckb-next ftba jetbrains-toolbox notion-app osu-lazer-bin packwiz-bin-git prismlauncher protonup-qt-bin spotify ticktick visual-studio-code-bin
+# Desktop Environment
+sudo -u ozoku yay -S --noconfirm adw-gtk3 awesome-git betterlockscreen kvantum-theme-libadwaita-git
+# Terminal Apps
+sudo -u ozoku yay -S --noconfirm packwiz-bin-git
+# Desktop Apps
+sudo -u ozoku yay -S --noconfirm authy blockbench-bin brave-bin ckb-next etcher-bin jetbrains-toolbox notion-app spotify ticktick visual-studio-code-bin
+# Gaming
+sudo -u ozoku yay -S --noconfirm osu-lazer-bin prismlauncher-qt5-bin protonup-qt-bin
 
 # enable sudo for wheel group
 echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-wheel-sudo

@@ -13,7 +13,7 @@ echo 'LANG=en_US.UTF-8' >/etc/locale.conf
 echo 'KEYMAP=fi' >/etc/vconsole.conf
 
 # hostname
-echo archlinux >/etc/hostname
+echo cosmos >/etc/hostname
 
 # username:encrypted_password (encrypt with 'openssl passwd -6')
 echo 'root:$6$ONVZxtwYZH4IrTL4$4tRUG.KXu/bcmU4cSlNfOKb8Gk99xPm1tBW4KEyPatzyT.LcLYi1E9vj6lxxf8doNO2cTnFRbduh1k2iAlsZl/' | chpasswd -e
@@ -21,7 +21,7 @@ echo 'root:$6$ONVZxtwYZH4IrTL4$4tRUG.KXu/bcmU4cSlNfOKb8Gk99xPm1tBW4KEyPatzyT.LcL
 # configure pacman
 grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
 sed -Ei "s/^#(ParallelDownloads).*/\1 = 5/;/^#Color$/s/#//" /etc/pacman.conf
-sed -i '/^#\[multilib]/{N;s/\n#/\n/}' file
+sed -i '/^#\[multilib]/{N;s/\n#/\n/}' /etc/pacman.conf
 sed -i 's/#\[multilib]/\[multilib]/g' /etc/pacman.conf
 pacman -Syu --noconfirm
 
@@ -54,21 +54,6 @@ sudo -u ozoku makepkg --noconfirm -si
 
 # install aur packages
 sudo -u ozoku yay -S --noconfirm adw-gtk3 authy awesome-git betterlockscreen blockbench-bin brave-bin ckb-next ftba jetbrains-toolbox notion-app osu-lazer-bin packwiz-bin-git prismlauncher protonup-qt-bin spotify ticktick visual-studio-code-bin
-
-# setup user folders
-sudo -u ozoku mkdir -p /home/ozoku/{.local/{bin,src,share,state/ssh},.config,src}
-
-# setup dotfiles
-cd /home/ozoku/.local/src
-sudo -u ozoku git clone https://github.com/ozokuz/dotfiles /home/ozoku/.local/src/dotfiles
-cd /home/ozoku/.local/src/dotfiles/linux
-
-for folder in alacritty awesome ckb-next discord fish git shell tmux; do
-	sudo -u ozoku stow -t /home/ozoku $folder
-done
-
-cd /home/ozoku/.local/src/dotfiles/global
-sudo -u ozoku stow -t /home/ozoku starship
 
 # enable sudo for wheel group
 echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-wheel-sudo

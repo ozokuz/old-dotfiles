@@ -37,7 +37,7 @@ mkdir -p /mnt/{home,boot,var/{log,cache/pacman/pkg}}
 # mount other subvolumes
 mount -o compress=zstd,noatime,subvol=@home "$DRIVE_PARTITION"2 /mnt/home
 mount -o compress=zstd,noatime,subvol=@log "$DRIVE_PARTITION"2 /mnt/var/log
-mount -o compress=zstd,noatime,subvol=@ "$DRIVE_PARTITION"2 /mnt/var/cache/pacman/pkg
+mount -o compress=zstd,noatime,subvol=@pkg "$DRIVE_PARTITION"2 /mnt/var/cache/pacman/pkg
 
 # mount efi partition
 mount "$DRIVE_PARTITION"1 /mnt/boot
@@ -46,7 +46,7 @@ mount "$DRIVE_PARTITION"1 /mnt/boot
 pacstrap -K /mnt base linux linux-firmware
 
 # generate fstab
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >>/mnt/etc/fstab
 
 # copy next part of install script to root
 cp /root/chroot.sh /mnt/

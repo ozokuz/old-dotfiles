@@ -31,11 +31,11 @@ ruled.client.connect_signal('request::rules', function()
       properties = { screen = 2, tag = screen[2].tags[7] },
     },
     {
-      rule_every = { class = 'Steam', name = 'Steam' },
+      rule_every = { class = 'steamwebhelper', name = 'Steam' },
       properties = { screen = 2, tag = screen[2].tags[7] },
     },
     {
-      rule = { class = 'Steam' },
+      rule = { class = 'steamwebhelper' },
       except = { name = 'Steam' },
       properties = { floating = true },
     },

@@ -163,11 +163,11 @@ screen.connect_signal('request::desktop_decoration', function(s)
     widget = layout,
   })
 
-  s.volume_popup:connect_signal('mouse::enter', function()
+  --[[ s.volume_popup:connect_signal('mouse::enter', function()
     popup_hide_timer:stop()
   end)
 
   s.volume_popup:connect_signal('mouse::leave', function()
     popup_hide_timer:start()
-  end)
+  end) ]]
 end)

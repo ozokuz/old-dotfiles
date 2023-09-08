@@ -16,41 +16,46 @@ ruled.client.connect_signal('request::rules', function()
     },
   })
 
-  -- Tag & Screen Rules
-  ruled.client.append_rules({
-    {
-      rule = { class = 'discord' },
-      properties = { screen = 2, tag = screen[2].tags[1] },
-    },
-    {
-      rule = { class = 'spotify' },
-      properties = { screen = 2, tag = screen[2].tags[9] },
-    },
-    {
-      rule = { class = 'Lutris' },
-      properties = { screen = 2, tag = screen[2].tags[7] },
-    },
-    {
-      rule_every = { class = 'steamwebhelper', name = 'Steam' },
-      properties = { screen = 2, tag = screen[2].tags[7] },
-    },
-    {
-      rule = { class = 'steamwebhelper' },
-      except = { name = 'Steam' },
-      properties = { floating = true },
-    },
-    {
-      rule = { class = 'lxqt-openssh-askpass' },
-      properties = { floating = true },
-    },
-    {
-      rule = { instance = 'Blueberry.py' },
-      callback = function(c)
-        if not blueberry then
-          blueberry = true
-          c.minimized = true
-        end
-      end,
-    },
+  -- App rules
+  -- Discord
+  ruled.client.append_rule({
+    rule = { class = 'discord' },
+    properties = { tag = screen[2].tags[1] },
+  })
+  -- Spotify
+  ruled.client.append_rule({
+    rule = { class = 'spotify' },
+    properties = { tag = screen[2].tags[9] },
+  })
+  -- Lutris
+  ruled.client.append_rule({
+    rule = { class = 'Lutris' },
+    properties = { tag = screen[2].tags[7] },
+  })
+  -- Steam - Main Window
+  ruled.client.append_rule({
+    rule_every = { class = 'steamwebhelper', name = 'Steam' },
+    properties = { tag = screen[2].tags[7] },
+  })
+  -- Steam - Other Windows
+  ruled.client.append_rule({
+    rule = { class = 'steamwebhelper' },
+    except = { name = 'Steam' },
+    properties = { floating = true },
+  })
+  -- SSH Password
+  ruled.client.append_rule({
+    rule = { class = 'lxqt-openssh-askpass' },
+    properties = { floating = true },
+  })
+  -- Bluetooth
+  ruled.client.append_rule({
+    rule = { class = 'blueberry.py' },
+    callback = function(c)
+      if not blueberry then
+        blueberry = true
+        c.minimized = true
+      end
+    end,
   })
 end)

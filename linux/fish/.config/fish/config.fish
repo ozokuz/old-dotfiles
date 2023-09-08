@@ -24,6 +24,10 @@ set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
 set -x QT_STYLE_OVERRIDE kvantum-dark
 set -x QT_QPA_PLATFORMTHEME qt5ct
 
+# Fix Java
+set -x JDK_JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+set -x _JAVA_AWT_WM_NONREPARENTING 1
+
 # Custom
 set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$PNPM_HOME:$PATH"
 set -x EDITOR nvim
@@ -44,6 +48,8 @@ eval (cat "$XDG_STATE_HOME/ssh/agent-info")
 if status is-interactive
     # No Greeting
     set fish_greeting
+
+    set -e JDK_JAVA_OPTIONS
 
     # Theme
     # TokyoNight Color Palette

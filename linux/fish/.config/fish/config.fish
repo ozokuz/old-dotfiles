@@ -92,3 +92,6 @@ if status is-interactive
     # Prompt
     starship init fish | source
 end
+
+# opam configuration
+source /home/ozoku/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true

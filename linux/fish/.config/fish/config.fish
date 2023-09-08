@@ -88,6 +88,7 @@ if status is-interactive
 
     # Aliases
     source $HOME/.config/shell/aliases
+    alias zf="cd (z -l | awk '{print \$2}' | fzf)"
 
     # Prompt
     starship init fish | source

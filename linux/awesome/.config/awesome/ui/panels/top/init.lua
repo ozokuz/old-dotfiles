@@ -83,7 +83,7 @@ top_panel.setup = function(s)
         awful.client.focus.byidx(1)
       end),
     }, ]]
-    widget_template = {
+    --[[ widget_template = {
       {
         {
           {
@@ -98,7 +98,7 @@ top_panel.setup = function(s)
       },
       id = 'background_role',
       widget = wibox.container.background,
-    },
+    }, ]]
   })
 
   s.wibar = awful.wibar({

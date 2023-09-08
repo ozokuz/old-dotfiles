@@ -7,7 +7,7 @@ set -x XDG_DATA_HOME "$HOME/.local/share"
 set -x XDG_STATE_HOME "$HOME/.local/state"
 # Custom Home Directories
 set -x CHD_SRC_HOME "$HOME/.local/src"
-set -x CHD_BIN_HOME "$HOME/.local/bin" 
+set -x CHD_BIN_HOME "$HOME/.local/bin"
 
 # Clean Home
 set -x GOPATH "$CHD_SRC_HOME/go"
@@ -21,8 +21,8 @@ set -x WINEPREFIX "$XDG_DATA_HOME/wine"
 set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
 
 # Theming
-set -x QT_STYLE_OVERRIDE "kvantum-dark"
-set -x QT_QPA_PLATFORMTHEME "qt5ct"
+set -x QT_STYLE_OVERRIDE kvantum-dark
+set -x QT_QPA_PLATFORMTHEME qt5ct
 
 # Custom
 set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$PNPM_HOME:$PATH"
@@ -30,11 +30,11 @@ set -x EDITOR nvim
 set -x BROWSER brave
 set -x TERMINAL alacritty
 
-if not pgrep -f "ssh-agent" >/dev/null
+if not pgrep -f ssh-agent >/dev/null
     if not test -d "$XDG_STATE_HOME/ssh"
         mkdir -p "$XDG_STATE_HOME/ssh"
     end
-    ssh-agent -c > "$XDG_STATE_HOME/ssh/agent-info"
+    ssh-agent -c >"$XDG_STATE_HOME/ssh/agent-info"
     sed -i '$d' "$XDG_STATE_HOME/ssh/agent-info"
 end
 
@@ -57,7 +57,7 @@ if status is-interactive
     set -l purple 9d7cd8
     set -l cyan 7dcfff
     set -l pink bb9af7
-    
+
     # Syntax Highlighting Colors
     set -g fish_color_normal $foreground
     set -g fish_color_command $cyan
@@ -73,7 +73,7 @@ if status is-interactive
     set -g fish_color_operator $green
     set -g fish_color_escape $pink
     set -g fish_color_autosuggestion $comment
-    
+
     # Completion Pager Colors
     set -g fish_pager_color_progress $comment
     set -g fish_pager_color_prefix $cyan

@@ -1,10 +1,9 @@
 #!/bin/sh
 
 run() {
-  if ! pgrep -f "$1";
-  then
-    "$@"&
-  fi
+	if ! pgrep -f "$1"; then
+		"$@" &
+	fi
 }
 
 run picom
@@ -15,7 +14,7 @@ xset r rate 500 30
 
 # Check if the script is being run again when awesome is reloaded
 if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then
-  exit
+	exit
 fi
 
 # Remember that the script has been run

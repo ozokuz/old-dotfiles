@@ -51,6 +51,7 @@ awful.keyboard.append_global_keybindings({
     awesome.quit,
     { description = 'Quit', group = 'System' }
   ),
+  -- Restart Awesome
   k(
     { super, 'Shift' }, 'r',
     awesome.restart,

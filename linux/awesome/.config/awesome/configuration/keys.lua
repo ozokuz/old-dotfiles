@@ -57,6 +57,14 @@ awful.keyboard.append_global_keybindings({
     awesome.restart,
     { description = 'Restart Awesome', group = 'System' }
   ),
+  -- Lock
+  k(
+    { super }, 'x',
+    function()
+      awful.spawn.with_shell('betterlockscreen -l dim')
+    end,
+    { description = 'Lock', group = 'System' }
+  ),
   -- Configure Network
   k(
     { super, 'Shift' }, 'w',
@@ -304,7 +312,7 @@ awful.keyboard.append_global_keybindings({
   ),
   -- Password Manager
   k(
-    { super }, 'x',
+    { super }, 's',
     function()
       awful.spawn('bitwarden-desktop')
     end,
@@ -312,7 +320,7 @@ awful.keyboard.append_global_keybindings({
   ),
   -- Authenticator
   k(
-    { super, "Shift" }, 'x',
+    { super, "Shift" }, 's',
     function()
       awful.spawn('authy')
     end,

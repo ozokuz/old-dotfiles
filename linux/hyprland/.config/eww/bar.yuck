@@ -1,0 +1,79 @@
+; Widgets
+; Spacer
+(defwidget spacer []
+  (box
+    ;:style "padding-left: 8px; padding-right: 8px"
+    :style "padding-left: 16px"
+    ""))
+
+; Workspaces
+(defvar workspaces "[1,2,3,4,5,6,7,8,9]")
+(defwidget workspaces [active]
+  (box :spacing 8
+    :class "bg rounded-lg"
+    :style "padding: 0 18px"
+    (for ws in workspaces
+      (button
+        :onclick "hyprsome workspace ${ws}"
+        :class {ws == active ? "active" : ""}
+        ws))))
+
+; Active Window
+(deflisten window
+  :initial ""
+  "ew_active_window")
+(defwidget window []
+  (box
+    :class "rounded-lg ${window == "" ? "hide" : "bg"}"
+    :style "padding: 0 18px"
+    window))
+
+; Now Playing
+(deflisten music
+  :initial "Nothing is playing"
+  "ew_now_playing")
+(defwidget music []
+  (box
+    :class "bg rounded-lg"
+    :style "padding: 0 18px"
+    (button
+      :onclick "ew_toggle_window music"
+      music)))
+
+; Date & Time
+(defpoll datetime
+  :interval "1s"
+  "date '+%a, %b %d | %H:%M:%S'")
+(defwidget datetime []
+  (box
+    :class "bg rounded-lg"
+    :style "padding: 0 18px"
+    (button
+      :onclick "ew_toggle_window calendar"
+      datetime)))
+
+; Bar Parts
+; Bar Left Part
+(defwidget left [active]
+  (box
+    :halign "start"
+    :space-evenly false
+    (workspaces :active active)
+    (spacer)
+    (window)))
+
+; Bar Right Part
+(defwidget right []
+  (box
+    :halign "end"
+    :space-evenly false
+    (datetime)))
+
+; Construct the bar
+; Bar
+(defwidget bar [active]
+  (centerbox :orientation "h" :class "bar rounded-lg"
+    (left :active active)
+    (music)
+    (right)))
+

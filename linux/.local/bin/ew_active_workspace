@@ -1,0 +1,32 @@
+#!/bin/bash
+
+monitor=$1
+
+if [ $monitor -ge 0 ]; then
+	echo "ok" >/dev/null
+else
+	echo "Argument is not a number"
+	exit 1
+fi
+
+handle() {
+	case $1 in
+	workspace*)
+		workspace="$(echo $1 | sed -E 's/workspace>>(.*)/\1/')"
+		mon=""
+		ws=""
+		if [ ${#workspace} == 1 ]; then
+			mon="0"
+			ws="$workspace"
+		else
+			mon="${workspace::1}"
+			ws="${workspace:1:2}"
+		fi
+		if [ $mon -eq $monitor ]; then
+			echo "$ws"
+		fi
+		;;
+	esac
+}
+
+socat -U - UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do handle "$line"; done

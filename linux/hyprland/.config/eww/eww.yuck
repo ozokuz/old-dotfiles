@@ -1,0 +1,33 @@
+; Bars
+(include "./bar.yuck")
+(include "./widgets/calendar.yuck")
+(include "./widgets/music.yuck")
+
+; Window
+; Main Monitor Bars
+(deflisten activeworkspace0 :initial "1" "ew_active_workspace 0")
+(defwindow bar1
+  :monitor 0
+  :geometry (geometry
+    :x "0%"
+    :y "20px"
+    :width "2520px"
+    :height "36px"
+    :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (bar :active activeworkspace0))
+
+; Side Monitor Bar
+(deflisten activeworkspace1 :initial "1" "ew_active_workspace 1")
+(defwindow bar2
+  :monitor 1
+  :geometry (geometry
+    :x "0%"
+    :y "20px"
+    :width "2520px"
+    :height "32px"
+    :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (bar :active activeworkspace1))

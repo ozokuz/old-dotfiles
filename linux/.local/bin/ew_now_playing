@@ -1,0 +1,19 @@
+#!/bin/bash
+
+handle() {
+	status="$(echo $1 | awk -F@ '{print $1}')"
+	playing="$(echo $1 | awk -F@ '{print $2}')"
+	case $status in
+	Playing)
+		echo "$playing"
+		;;
+	Paused)
+		echo "Paused"
+		;;
+	*)
+		echo "Nothing is playing"
+		;;
+	esac
+}
+
+playerctl -p spotify --follow metadata -f '{{status}}@{{ artist }} - {{ title }}' | while read -r line; do handle "$line"; done

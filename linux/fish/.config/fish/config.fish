@@ -20,8 +20,8 @@ set -x WINEPREFIX "$XDG_DATA_HOME/wine"
 set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
 
 # Theming
-set -x QT_STYLE_OVERRIDE kvantum-dark
-set -x QT_QPA_PLATFORMTHEME qt5ct
+#set -x QT_STYLE_OVERRIDE kvantum-dark
+#set -x QT_QPA_PLATFORMTHEME qt5ct
 
 # Fix Java
 #set -x JDK_JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
@@ -33,15 +33,15 @@ set -x EDITOR nvim
 set -x BROWSER brave
 set -x TERMINAL alacritty
 
-if not pgrep -f ssh-agent >/dev/null
-    if not test -d "$XDG_STATE_HOME/ssh"
-        mkdir -p "$XDG_STATE_HOME/ssh"
-    end
-    ssh-agent -c >"$XDG_STATE_HOME/ssh/agent-info"
-    sed -i '$d' "$XDG_STATE_HOME/ssh/agent-info"
-end
+#if not pgrep -f ssh-agent >/dev/null
+#    if not test -d "$XDG_STATE_HOME/ssh"
+#        mkdir -p "$XDG_STATE_HOME/ssh"
+#    end
+#    ssh-agent -c >"$XDG_STATE_HOME/ssh/agent-info"
+#    sed -i '$d' "$XDG_STATE_HOME/ssh/agent-info"
+#end
 
-eval (cat "$XDG_STATE_HOME/ssh/agent-info")
+#eval (cat "$XDG_STATE_HOME/ssh/agent-info")
 
 ## Main
 if status is-interactive

@@ -12,7 +12,6 @@ set -x CHD_BIN_HOME "$HOME/.local/bin"
 # Clean Home
 set -x GOPATH "$CHD_SRC_HOME/go"
 set -x CARGO_HOME "$XDG_DATA_HOME/cargo"
-set -x PNPM_HOME "$XDG_DATA_HOME/pnpm"
 set -x CUDA_CACHE_PATH "$XDG_CACHE_HOME/nv"
 set -x GNUPGHOME "$XDG_DATA_HOME/gnupg"
 set -x LESSHISTFILE "$XDG_CACHE_HOME/less/history"
@@ -25,11 +24,11 @@ set -x QT_STYLE_OVERRIDE kvantum-dark
 set -x QT_QPA_PLATFORMTHEME qt5ct
 
 # Fix Java
-set -x JDK_JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-set -x _JAVA_AWT_WM_NONREPARENTING 1
+#set -x JDK_JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#set -x _JAVA_AWT_WM_NONREPARENTING 1
 
 # Custom
-set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$PNPM_HOME:$PATH"
+set -x PATH "$CHD_BIN_HOME:$CARGO_HOME/bin:$GOPATH/bin:$HOME/.nix-profile/bin:$PATH"
 set -x EDITOR nvim
 set -x BROWSER brave
 set -x TERMINAL alacritty
@@ -49,7 +48,7 @@ if status is-interactive
     # No Greeting
     set fish_greeting
 
-    set -e JDK_JAVA_OPTIONS
+    #set -e JDK_JAVA_OPTIONS
 
     # Theme
     # TokyoNight Color Palette

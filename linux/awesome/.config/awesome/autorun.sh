@@ -26,4 +26,4 @@ playerctld daemon
 pactl set-source-volume alsa_input.usb-Elgato_Systems_Elgato_Wave_3_BS29J1A01047-00.mono-fallback 48%
 #pactl set-source-mute alsa_input.usb-Elgato_Systems_Elgato_Wave_3_BS29J1A01047-00.mono-fallback 1
 #xcape -e 'Super_L=Escape'
-SSH_ASKPASS=/usr/bin/lxqt-openssh-askpass ssh-add >/dev/null </dev/null &
+#SSH_ASKPASS=/usr/bin/lxqt-openssh-askpass ssh-add >/dev/null </dev/null &
